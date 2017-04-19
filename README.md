@@ -46,17 +46,21 @@ Setup
     sudo easy_install rpi.gpio<br>
     sudo apt-get install alsa-utils<br>
     sudo apt-get install mpg321<br>
-    sudo apt-get install sqlite3<br>
     sudo apt-get install libsqlite3-dev<br>
     sudo apt-get install npm<br>
 3.  Install node dependencies with NPM<br>
+    sudo apt-get remove gyp<br>
     npm install -g node-gyp<br>
     npm install node-static<br>
-    npm install node-sqlite3<br>
-4.  Clone git repository to /home/pi.  i.e. logger.py should be in /home/pi directory<br>
-    git clone git://github.com/tilimil/PIBBQMonitor.git<br>
+4. Install SQLite3 
+    sudo apt-get remove sqlite2<br>
+    sudo apt-get install sqlite3<br>
+    sudo npm install sqlite@latest --unsafe-perm<br>
+    sudo apt-get install sqllite<br>
+5.  Clone git repository to /home/pi.  i.e. logger.py should be in /home/pi directory<br>
+    git clone git://github.com/brodydittemore/PIBBQMonitor.git<br>
     cp -R ~pi/PIBBQMonitor/* ~pi/<br>
-5.  Run command to create DB.  Build_db.sh is not working currently<br>
+6.  Run command to create DB.  Build_db.sh is not working currently<br>
     sudo sqlite3 /home/pi/templog.db<br>
     SQLite version 3.7.13 2012-06-11 02:05:22<br>
     Enter ".help" for instructions<br>
@@ -65,13 +69,13 @@ Setup
     Error: no such table: temps<br>
     sqlite> CREATE TABLE temps(timestamp timestamp default (strftime('%s', 'now')), sensnum numeric, temp numeric); <br>
     sqlite> .quit<br>
-5.  Disable any webserver that may already be running on port 80.<br>
+7.  Disable any webserver that may already be running on port 80.<br>
     sudo update-rc.d apache2 disable<br>
-6.  Setup the thermserv node app as a service<br>
+8.  Setup the thermserv node app as a service<br>
     sudo cp /home/pi/thermserv_initfile /etc/init.d/thermserv<br>
     sudo chmod 755 /etc/init.d/thermserv<br>
     update-rc.d thermserv defaults<br>
-7.  Execute "sudo crontab -e" and paste the following lines into your crontab.  Logger will log the temp to the DB every minute. The dbcleanup.sh will limit the DB to 24 hours worth of data:<br>
+9.  Execute "sudo crontab -e" and paste the following lines into your crontab.  Logger will log the temp to the DB every minute. The dbcleanup.sh will limit the DB to 24 hours worth of data:<br>
       */1 * * * * /home/pi/logger.py<br>
       0 * * * * /home/pi/dbcleanup.sh<br>
       */1 * * * * /home/pi/alert.py<br>
