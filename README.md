@@ -55,18 +55,18 @@ Setup
 4.  Install node dependencies with NPM<br>
     sudo npm install -g node-gyp<br>
     sudo npm install node-static<br>
-5.  Install Postgres
+5.  Install Postgres<br>
     sudo apt-get install postgresql-9.4<br>
-    sudo cp /etc/postgresql/9.4/main/pg_hba.conf /etc/postgresql/9.4/main/pg_hba.conf.bak
-    sudo nano /etc/postgresql/9.4/main/pg_hba.conf
-    sudo cp /etc/postgresql/9.4/main/postgresql.conf /etc/postgresql/9.4/main/postgresql.conf.bak
-    sudo nano /etc/postgresql/9.4/main/postgresql.conf
-    sudo apt-get install pgadmin3
-    sudo -u postgres psql
+    sudo cp /etc/postgresql/9.4/main/pg_hba.conf /etc/postgresql/9.4/main/pg_hba.conf.bak<br>
+    sudo nano /etc/postgresql/9.4/main/pg_hba.conf<br>
+    sudo cp /etc/postgresql/9.4/main/postgresql.conf /etc/postgresql/9.4/main/postgresql.conf.bak<br>
+    sudo nano /etc/postgresql/9.4/main/postgresql.conf<br>
+    sudo apt-get install pgadmin3<br>
+    sudo -u postgres psql<br>
 6.  Clone git repository to /home/pi.  i.e. logger.py should be in /home/pi directory<br>
     git clone git://github.com/brodydittemore/PIBBQMonitor.git<br>
     cp -R ~pi/PIBBQMonitor/* ~pi/<br>
-7.  Run command to create DB.  
+7.  Run command to create DB<br>
     Build_db.sh<br>
 8.  Disable any webserver that may already be running on port 80.<br>
     sudo update-rc.d apache2 disable<br>
@@ -78,16 +78,16 @@ Setup
     chmod +x /home/pi/logger.py<br>
     chmod +x /home/pi/dbcleanup.sh<br>
     chmod +x /home/pi/alert.py<br>
-11. Config Postgresql and connection
-    sudo adduser postgres_user
-    sudo su - postgres_user
-    nano database.ini
-    nano config.py
-    sudo apt-get install python-psycopg2
-    sudo apt-get install build-dep
-    sudo apt-get install python-configparser
+11. Config Postgresql and connection<br>
+    sudo adduser postgres_user<br>
+    sudo su - postgres_user<br>
+    nano database.ini<br>
+    nano config.py<br>
+    sudo apt-get install python-psycopg2<br>
+    sudo apt-get install build-dep<br>
+    sudo apt-get install python-configparser<br>
 12.  Execute "sudo crontab -e" and paste the following lines into your crontab.  Logger will log the temp to the DB every minute. The dbcleanup.sh will limit the DB to 24 hours worth of data:<br>
       */1 * * * * /home/pi/logger.py<br>
       0 * * * * /home/pi/dbcleanup.sh<br>
       */1 * * * * /home/pi/alert.py<br>
-13. /etc/initd/thermserv start
+13. /etc/initd/thermserv start<br>
